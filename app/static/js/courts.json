@@ -1,0 +1,60 @@
+{
+	"courts" : [
+{
+	"name":"Thomas Jefferson Community Center",
+	"address": "3501 2nd St S, Arlington, VA 22204",
+	"lat": "38.868632",
+	"lng": "-77.095876",
+	"type":"both"
+},
+{
+	"name":"Langston Community Center",
+	"address": "2121 N Culpeper St, Arlington, VA 22207",
+	"lat": "38.895400",
+	"lng": "-77.126658",
+	"type": "both"
+},
+{
+	"name":"Lyon Village Park",
+	"address": "1800 N Highland St, Arlington, VA 22201",
+	"lat": "38.892771",
+	"lng": "-77.094330",
+	"type": "outdoor"
+},
+{
+	"name":"Barcroft Park",
+	"address": "4200 S Four Mile Run Dr, Arlington, VA 22206",
+	"lat": "38.850664",
+	"lng": "-77.100987",
+	"type": "both"
+},
+{
+	"name":"Quincy Park",
+	"address": "1021 N Quincy St, Arlington, VA 22201",
+	"lat": "38.883217",
+	"lng": "-77.107741",
+	"type": "outdoor"
+},
+{
+	"name":"Rocky Run Park",
+	"address": "1109 N Barton St, Arlington, VA 22201",
+	"lat": "38.886071",
+	"lng": "-77.088009",
+	"type": "outdoor"
+},
+{
+	"name":"Rosslyn Highlands Park",
+	"address": "1579 Wilson Blvd, Arlington, VA 22201",
+	"lat": "38.894269",
+	"lng": "-77.075961",
+	"type": "outdoor"
+},
+{
+	"name":"Westover Park",
+	"address": "1001 N Kennebec St, Arlington, VA 22205",
+	"lat": "38.879600",
+	"lng": "-77.135357",
+	"type": "outdoor"
+}
+]
+}

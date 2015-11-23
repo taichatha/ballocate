@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block style %}
+<style type="text/css">
+  html, body { height: 100%; margin: 0; padding: 0; }
+  #map { height: 75%;
+  		width: 75%; }
+</style>
+{% endblock %}
+{% block content %}
+    <h1>Ballocate</h1>
+    <hr>
+    
+    <h2> Courts near you </h2>
+    <div id ="test"></div>
+    
+    <div id="map"></div>
+   	<div id="courts">
+   		<h1>Courts</h1>
+   		<ul>
+   			{% for court in courts %}
+   				<li> {{court.name}} <button  id='minus_{{ court.attendances.all()[court.attendances.all()|length-1].id }}' onclick="down({{court.attendances.all()[court.attendances.all()|length-1].id}})"></button><span class="badge" id="people_{{ court.attendances.all()[court.attendances.all()|length-1].id }}">{{court.attendances.all()[court.attendances.all()|length-1].people}}</span><button id = "up_{{court.attendances.all()[court.attendances.all()|length-1].id}}" onclick="up({{court.attendances.all()[court.attendances.all()|length-1].id}}, {{court.id}}, '{{court.name}}')">+</button></li>
+   			{% endfor %}
+   		</ul>
+   		<div id="response"></div>
+{# 		<ul>
+		{% for court in data.courts %}
+			<li> {{ court.name}} </li>
+		{% endfor %}
+		</ul> #}
+   	</div>
+   	<script>
+
+   	</script>
+   	<script>
+   	    function up(attendanceId, courtId, court_Name){
+   	    	$.ajax({
+   	    		url: '/up/'+ attendanceId,
+   	    		
+   	    		success: function(data){
+   	    			$('#people_'+attendanceId).html(data.result);
+   	    			
+   	    			
+	  				  
+   	    			
+   	    			
+   	    		}
+   	    	});
+   	    }
+   	    function down(attendanceId){
+   	    	$.ajax({
+   	    		url: '/down/'+ attendanceId,
+   	    		
+   	    		success: function(data){
+   	    			$('#people_'+attendanceId).html(data.result);
+   	    		}
+   	    	});
+   	    }
+   	</script>
+   	
+    <script>
+    var markers = [];
+    var map = 0;
+	function initMap() {
+	  map = new google.maps.Map(document.getElementById('map'), {
+	    center: {lat: 38.897, lng: -77.00},
+	    zoom: 10
+	  });
+	  var infoWindow = new google.maps.InfoWindow({map: map});
+      
+
+	  {% for court in courts %}
+	  	
+	  	var zlat = {{court.lat}};
+	  	var zlng = {{court.lng}};
+	  	var content = "{{court.name}}: " + "{{court.attendances.all()[court.attendances.all()|length-1].people}}";
+	  	var myLatLng = {lat: zlat, lng: zlng};
+	  	var courtName = new google.maps.InfoWindow({
+	  		content: "holding.."
+	  	});
+	    var marker = new google.maps.Marker({
+	          map: map,
+	          position: myLatLng
+	        });
+
+	    markers.push(marker);
+	    google.maps.event.addListener(marker,'click', (function(marker,content,courtName){ 
+	            return function() {
+	               courtName.setContent(content);
+	               courtName.open(map,marker);
+	            };
+	        })(marker,content,courtName)); 
+	   
+	  {% endfor %}
+
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Location found.');
+      map.setCenter(pos);
+    }, function() {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+                        'Error: The Geolocation service failed.' :
+                        'Error: Your browser doesn\'t support geolocation.');
+}
+
+	 
+
+	    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?&callback=initMap"
+        async defer></script>
+    
+
+    
+    
+{% endblock %}

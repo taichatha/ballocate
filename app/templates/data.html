@@ -1,0 +1,17 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Data</h1>
+  {% for court in courts%}
+  <table>
+    <tr>{{court.name}}
+        {% for attendance in court.attendances.all() %}
+        <td>{{attendance.date.date()}}</td>
+        <td>{{attendance.people}}</td>
+        {% endfor %}
+    </tr>
+  </table>
+  {% endfor %}
+
+{% endblock %}
